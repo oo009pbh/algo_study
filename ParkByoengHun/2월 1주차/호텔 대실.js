@@ -18,12 +18,13 @@ function solution(book_time) {
             if (room <= s) {
                 isRoomChange = true;
                 rooms[index] = e;
+                break;
             }
         }
         if (!isRoomChange) {
             rooms.push(e);
         }
-        rooms.sort((a, b) => b - a);
+        rooms.sort((a, b) => a - b);
     }
 
     return rooms.length;
