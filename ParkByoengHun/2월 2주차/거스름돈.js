@@ -1,30 +1,28 @@
-function solution(dartResult) {
-    let score = 0;
-    let cnt = [];
+const readline = require("readline");
 
-    for (let i = 0; i < dartResult.length; i++) {
-        if (!isNaN(dartResult[i])) {
-            score = Number(dartResult[i - 1]) === 1 ? 10 : Number(dartResult[i]);
-        }
-        else if (dartResult[i] === "S") {
-            cnt.push(score);
-        }
-        else if (dartResult[i] === "D") {
-            cnt.push(Math.pow(score, 2));
-        }
-        else if (dartResult[i] === "T") {
-            cnt.push(Math.pow(score, 3));
-        }
-        else if (dartResult[i] === "*") {
-            cnt[cnt.length - 2] = cnt[cnt.length - 2] * 2;
-            cnt[cnt.length - 1] = cnt[cnt.length - 1] * 2;
-        }
-        else if (dartResult[i] === "#") {
-            cnt[cnt.length - 1] = -1 * cnt[cnt.length - 1];
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
+
+let input = []
+
+rl.on("line", (line) => {
+    input.push(line);
+});
+
+rl.on('close', () => {
+    let N = 1000 - parseInt(input[0]);
+    let answer = 0;
+    let moneys = [1 , 5, 10, 50, 100, 500];
+    while (N > 0) {
+        if (N >= moneys[moneys.length - 1]) {
+            answer += Math.floor(N / moneys[moneys.length - 1]);
+            N = N % moneys[moneys.length - 1];
+        } else {
+            moneys.pop();
         }
     }
-
-    return cnt.reduce((acc, cur) => acc + cur, 0);
-}
-
-console.log(solution("1S2D*3T"))
+    console.log(answer);
+    process.exit();
+})
