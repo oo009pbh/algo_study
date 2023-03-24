@@ -56,7 +56,7 @@ function personBfs() {
         for (let i = 0; i < 4; i++) {
             const nextX = x + dx[i];
             const nextY = y + dy[i];
-            
+
             if (nextX < 0 || nextX >= R || nextY < 0 || nextY >= C)
                 return cnt;
             if(fireMap[nextX][nextY] !== 0 && fireMap[nextX][nextY] <= cnt + 1)
