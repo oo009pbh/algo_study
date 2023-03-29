@@ -1,4 +1,5 @@
 const readline = require("readline");
+const util = require('util');
 
 class Node {
     constructor(data){
@@ -49,53 +50,57 @@ rl.on('close', () => {
     let area = [];
     const q = new Queue();
     let jihoon = [0, 0];
-    let fires = [];
+    let fires = new Queue();
     let [R, C] = input[0].split(" ").map(item => parseInt(item));
 
-    // -1001 지나다닐 수 있음
-    // 1 벽
-    // 0 불이 일어난 지점
-    // -N N분 이후 불이 일어날 지점
+    // 1001 벽
+    // 1 지나다닐 수 있음
+    // -N N 분 이후 불이 일어날 지점 ex) -2 2분뒤, 0 현재
     for (let i = 1; i <= R; i++) {
         area.push(input[i].split(""));
 
         for (let j = 0 ; j < C; j ++) {
             if (area[i-1][j] === "#") {
-                area[i-1][j] = 1;
+                area[i-1][j] = 1001;
             } else if (area[i-1][j] === "F") {
                 area[i-1][j] = 0;
-                fires.push([i-1, j]);
+                fires.enqueue([i-1, j]);
             } else if (area[i-1][j] === "J") {
-                area[i-1][j] = -1001;
+                area[i-1][j] = 1;
                 jihoon = [i-1, j];
             } else {
-                area[i-1][j] = -1001;
+                area[i-1][j] = 1;
             }
         }
     }
 
-    q.enqueue([jihoon, 0]);
+    while (fires.size > 0){
+        let [curI, curJ] = fires.dequeue();
 
-    for (let fire of fires) {
-        let [curI, curJ] = fire;
-
-        for (let i = 1; curI + i < R && area[curI + i][curJ] !== 1; i ++) {
-            area[curI + i][curJ] = Math.max(area[curI + i][curJ] , -i);
+        if (curI + 1 < R && area[curI + 1][curJ] !== 1001 && area[curI + 1][curJ] === 1) {
+            area[curI + 1][curJ] = area[curI][curJ] - 1;
+            fires.enqueue([curI + 1, curJ]);
         }
-        for (let i = 1; curI - i >= 0 && area[curI - i][curJ] !== 1; i ++) {
-            area[curI - i][curJ] = Math.max(area[curI - i][curJ] , -i);
+        if (curI - 1 >= 0 && area[curI - 1][curJ] !== 1001 && area[curI - 1][curJ] === 1) {
+            area[curI - 1][curJ] = area[curI][curJ] - 1;
+            fires.enqueue([curI - 1, curJ]);
         }
-        for (let j = 1; curJ + j < C && area[curI][curJ + j] !== 1; j ++) {
-            area[curI][curJ + j] = Math.max(area[curI][curJ + j] , -j);
+        if (curJ + 1 < C && area[curI][curJ + 1] !== 1001 && area[curI][curJ + 1] === 1) {
+            area[curI][curJ + 1] = area[curI][curJ] - 1;
+            fires.enqueue([curI, curJ + 1]);
         }
-        for (let j = 1; curJ - j >= 0 && area[curI][curJ - j] !== 1; j ++) {
-            area[curI][curJ - j] = Math.max(area[curI][curJ - j] , -j);
+        if (curJ - 1 >= 0 && area[curI][curJ - 1] !== 1001 && area[curI][curJ - 1] === 1) {
+            area[curI][curJ - 1] = area[curI][curJ] - 1;
+            fires.enqueue([curI, curJ - 1]);
         }
     }
 
+    area[jihoon[0]][jihoon[1]] = 1001;
+    q.enqueue([...jihoon, 0]);
+
     while (q.size > 0) {
-        const [[curI, curJ], time] = q.dequeue();
-        area[curI][curJ] = 1;
+        const [curI, curJ, time] = q.dequeue();
+        // console.log(util.inspect(area, { showHidden: true, depth: null }), time);
 
         if (curI + 1 >= R || curJ + 1 >= C || curI - 1 < 0 || curJ - 1 < 0) {
             console.log(time + 1);
@@ -103,17 +108,21 @@ rl.on('close', () => {
             break;
         }
 
-        if (curI + 1 < R && area[curI + 1][curJ] !== 1 && area[curI + 1][curJ] + time < 0) {
-            q.enqueue([[curI + 1, curJ], time + 1]);
+        if (curI + 1 < R && area[curI + 1][curJ] !== 1001 && (time + 1 + area[curI + 1][curJ] < 0 || area[curI + 1][curJ] === 1)) {
+            q.enqueue([curI + 1, curJ, time + 1]);
+            area[curI + 1][curJ] = 1001;
         }
-        if (curI - 1 >= 0 && area[curI - 1][curJ] !== 1 && time + area[curI - 1][curJ] < 0) {
-            q.enqueue([[curI - 1, curJ], time + 1]);
+        if (curI - 1 >= 0 && area[curI - 1][curJ] !== 1001 && (time + 1 + area[curI - 1][curJ] < 0 || area[curI - 1][curJ] === 1)) {
+            q.enqueue([curI - 1, curJ, time + 1]);
+            area[curI - 1][curJ] = 1001;
         }
-        if (curJ + 1 < C && area[curI][curJ + 1] !== 1 && time + area[curI][curJ + 1] < 0) {
-            q.enqueue([[curI, curJ + 1], time + 1]);
+        if (curJ + 1 < C && area[curI][curJ + 1] !== 1001 && (time + 1 + area[curI][curJ + 1] < 0 || area[curI][curJ + 1] === 1)) {
+            q.enqueue([curI, curJ + 1, time + 1]);
+            area[curI][curJ + 1] = 1001;
         }
-        if (curJ - 1 >= 0 && area[curI][curJ - 1] !== 1 && time + area[curI][curJ - 1] < 0) {
-            q.enqueue([[curI, curJ - 1], time + 1]);
+        if (curJ - 1 >= 0 && area[curI][curJ - 1] !== 1001 && (time + 1 + area[curI][curJ - 1] < 0 || area[curI][curJ - 1] === 1)) {
+            q.enqueue([curI, curJ - 1, time + 1]);
+            area[curI][curJ - 1] = 1001;
         }
     }
 
