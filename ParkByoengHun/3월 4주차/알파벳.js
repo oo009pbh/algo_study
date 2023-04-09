@@ -49,57 +49,33 @@ rl.on("line", (line) => {
 rl.on('close', () => {
     const [R, C] = input[0].split(" ").map(item => parseInt(item));
     const field = [];
-    let answer = 0;
 
-    let visited = Array.from(Array(R), (v, i) => new Array(C).fill(false));
-    let visitedChar = {};
+    let answer = 0;
 
     for (let i = 1; i <= R; i ++) {
         field.push(input[i].split(""));
     }
 
-    for (let i = 65; i < 91; i++ ){
-        visitedChar[String.fromCharCode(i)] = 0;
-    }
-
-    const BFS = (i, j) => {
-        const q = new Queue();
-        q.enqueue([i, j, 1]);
-        visited[i][j] = true;
-
-        while (q.size > 0) {
-            let [curI, curJ, cnt] = q.dequeue();
-            visitedChar[field[curI][curJ]] += 1;
-            answer = Math.max(cnt, answer);
-            console.log(curI, curJ, field, visitedChar);
-
-            let prevSize = q.size;
-
-            if (curI + 1 < R && !visited[field[curI + 1][curJ]] && visitedChar[field[curI + 1][curJ]] === 0) {
-                visited[field[curI + 1][curJ]] = true;
-                q.enqueue([curI + 1, curJ, cnt + 1]);
-            }
-            if (curJ + 1 < C && !visited[field[curI][curJ + 1]] && visitedChar[field[curI][curJ + 1]] === 0) {
-                visited[field[curI][curJ + 1]] = true;
-                q.enqueue([curI, curJ + 1, cnt + 1]);
-            }
-            if (curI - 1 >= 0 && !visited[field[curI - 1][curJ]] && visitedChar[field[curI - 1][curJ]] === 0) {
-                visited[field[curI - 1][curJ]] = true;
-                q.enqueue([curI - 1, curJ, cnt + 1]);
-            }
-            if (curJ - 1 >= 0 && !visited[field[curI][curJ - 1]] && visitedChar[field[curI][curJ - 1]] === 0) {
-                visited[field[curI][curJ - 1]] = true;
-                q.enqueue([curI, curJ - 1, cnt + 1]);
-            }
-
-            if (prevSize === q.size) {
-                visitedChar[field[curI][curJ]] -= 1;
-                visited[field[curI][curJ]] = false;
-            }
+    const visited = new Set([field[0][0]]);
+    const DFS = (curI, curJ, cnt) => {
+        answer = Math.max(cnt, answer);
+        visited.add(field[curI][curJ]);
+        if (curI + 1 < R && !visited.has(field[curI + 1][curJ]) ) {
+            DFS(curI + 1, curJ, cnt + 1);
         }
+        if (curJ + 1 < C && !visited.has(field[curI][curJ + 1]) ) {
+            DFS(curI,curJ + 1, cnt + 1);
+        }
+        if (curI - 1 >= 0 && !visited.has(field[curI - 1][curJ])) {
+            DFS(curI - 1, curJ, cnt + 1);
+        }
+        if (curJ - 1 >= 0 && !visited.has(field[curI][curJ - 1])) {
+            DFS(curI,curJ - 1, cnt + 1);
+        }
+        visited.delete(field[curI][curJ]);
     }
 
-    BFS(0, 0);
+    DFS(0, 0, 1);
 
     console.log(answer);
     process.exit();
