@@ -36,21 +36,17 @@ public class Main {
             arr[i] = quest;
         }
 
-        int STR = 1;
-        int INT = 1;
-        int BONUS = 0;
-
-        for(int i = 1; i<=1000; i++){
-            for(int j = 1; j<=1000; j++){
+        for(int i = 1; i<=1000; i++){ //10
+            for(int j = 1; j<=1000; j++){ //20
                 int point = 0;
                 for(int k = 0; k<n; k++){
-                    if(arr[k].Str <= i || arr[k].Int <= j){
+                    if(arr[k].Str <= i || arr[k].Int <= j){ //2+1+1+5+1 = 9
                         point += arr[k].Bonus;
-                        solve[i][j] += 1;
+                        solve[i][j] += 1; //5
                     }
                 }
 
-                left[i][j] = point - i - j + 2;
+                left[i][j] = point - i - j + 2; //힘1 지1 -28 + 9
 
                 if(i == 1 && j == 1) possible[i][j] = true;
                 else if(possible[i-1][j] && left[i-1][j] > 0 && i-1 > 0) possible[i][j] = true;
