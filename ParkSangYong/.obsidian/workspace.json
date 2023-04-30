@@ -1,0 +1,155 @@
+{
+  "main": {
+    "id": "29efb0b4a710caa8",
+    "type": "split",
+    "children": [
+      {
+        "id": "c210c6a0eb5315c5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "de5beba1b4d19777",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "4월1주차/MT.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c6e728216de5589d",
+    "type": "split",
+    "children": [
+      {
+        "id": "a1a3429ca21fa460",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "73d14feb6b01ca78",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "102378e16575ef14",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "ef78501080d62820",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "68924930d2736c1a",
+    "type": "split",
+    "children": [
+      {
+        "id": "76a21c207fd4505a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "aa20ddce7b95172a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "4월1주차/MT.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d6ae84141882d7c2",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "4월1주차/MT.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d77cbffaafaab0a2",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "c7e7756369c02c52",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "4월1주차/MT.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:퀵 스위처 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 데일리 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false
+    }
+  },
+  "active": "de5beba1b4d19777",
+  "lastOpenFiles": [
+    "4월1주차/MT.md",
+    "4월1주차/물통.md",
+    "4월1주차/게임.md"
+  ]
+}
